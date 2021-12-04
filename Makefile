@@ -8,5 +8,5 @@ all: compile link
 compile:
 	g++ -I src/include -I include -I lib -c main.cpp -c lib/*.cpp
 link:
-	g++ main.o -o main -L src/lib $(LIBRARIES)
+	g++ *.o -o main -L src/lib $(LIBRARIES)
 	.\main.exe
