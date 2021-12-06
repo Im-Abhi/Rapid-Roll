@@ -3,15 +3,14 @@
 #include <stack>
 #include <memory>
 #include "State.hpp"
-using namespace std;
 
 namespace Engine
 {
     class StateMan 
     {
     private:
-        stack<unique_ptr<State>> m_stackState;
-        unique_ptr<State> m_newState;
+        std::stack<std::unique_ptr<State>> m_stackState;
+        std::unique_ptr<State> m_newState;
     
         bool m_add;
         bool m_replace;
@@ -20,9 +19,9 @@ namespace Engine
         StateMan();
         ~StateMan();
 
-        void Add(unique_ptr<State> toAdd, bool replace = false);
+        void Add(std::unique_ptr<State> toAdd, bool replace = false);
         void PopCurrent();
         void ProcessStateChange();
-        unique_ptr<State>& GetCurrent();
+        std::unique_ptr<State>& GetCurrent();
     };
 } // namespace Engine

@@ -10,10 +10,10 @@ Engine::StateMan::~StateMan()
 
 }
 
-void Engine::StateMan::Add(unique_ptr<State> toAdd, bool replace)
+void Engine::StateMan::Add(std::unique_ptr<State> toAdd, bool replace)
 {
     m_add = true;
-    m_newState = move(toAdd);
+    m_newState = std::move(toAdd);
 
     m_replace = replace;
 }
@@ -51,11 +51,13 @@ void Engine::StateMan::ProcessStateChange()
         }    
 
         m_stackState.push(move(m_newState));
+        m_stackState.top()->Init();
+        m_stackState.top()->Start();
         m_add = false;
     }
 }
 
-unique_ptr<Engine::State> &Engine::StateMan::GetCurrent()
+std::unique_ptr<Engine::State> &Engine::StateMan::GetCurrent()
 {
 
 }

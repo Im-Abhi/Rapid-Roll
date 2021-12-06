@@ -8,7 +8,7 @@ Engine::AssetMan::~AssetMan()
 {
 }
 
-void Engine::AssetMan::AddTexture(int id, string& filePath, bool wantRepeated = false)
+void Engine::AssetMan::AddTexture(int id, std::string& filePath, bool wantRepeated)
 {
     auto texture = std::make_unique<sf::Texture>();
 
@@ -17,12 +17,12 @@ void Engine::AssetMan::AddTexture(int id, string& filePath, bool wantRepeated = 
         if (wantRepeated)
         {
             texture->setRepeated(true);
+            m_textures[id] = std::move(texture);
         }
-
-        m_textures[id] = std::move(texture);
     }
 }
-void Engine::AssetMan::AddFont(int id, string& filePath)
+
+void Engine::AssetMan::AddFont(int id, std::string& filePath)
 {
     auto font = std::make_unique<sf::Font>();
 
@@ -32,12 +32,12 @@ void Engine::AssetMan::AddFont(int id, string& filePath)
     }
 }
 
-const Texture& Engine::AssetMan::GetTexture(int id) const
+const sf::Texture& Engine::AssetMan::GetTexture(int id) const
 {
     return *(m_textures.at(id)).get();
 }
 
-const Font& Engine::AssetMan::GetFont(int id) const
+const sf::Font& Engine::AssetMan::GetFont(int id) const
 {
     return *(m_fonts.at(id)).get();
 }
