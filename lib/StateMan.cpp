@@ -2,12 +2,10 @@
 
 Engine::StateMan::StateMan() : m_add(false), m_replace(false), m_remove(false)
 {
-
 }
 
-Engine::StateMan::~StateMan() 
+Engine::StateMan::~StateMan()
 {
-
 }
 
 void Engine::StateMan::Add(std::unique_ptr<State> toAdd, bool replace)
@@ -25,13 +23,13 @@ void Engine::StateMan::PopCurrent()
 
 void Engine::StateMan::ProcessStateChange()
 {
-    if(m_remove && (!m_stackState.empty()))
+    if(m_remove && (!m_stateStack.empty()))
     {
-        m_stackState.pop();
+        m_stateStack.pop();
 
-        if(!m_stackState.empty())
+        if(!m_stateStack.empty())
         {
-            m_stackState.top()->Start();
+            m_stateStack.top()->Start();
         }
 
         m_remove = false;
@@ -39,25 +37,25 @@ void Engine::StateMan::ProcessStateChange()
 
     if(m_add)
     {
-        if(m_replace && (m_stackState.empty()))
+        if(m_replace && (!m_stateStack.empty()))
         {
-            m_stackState.pop();
+            m_stateStack.pop();
             m_replace = false;
         }
 
-        if(!m_stackState.empty())
+        if(!m_stateStack.empty())
         {
-            m_stackState.top()->Pause();
-        }    
+            m_stateStack.top()->Pause();
+        }
 
-        m_stackState.push(move(m_newState));
-        m_stackState.top()->Init();
-        m_stackState.top()->Start();
+        m_stateStack.push(std::move(m_newState));
+        m_stateStack.top()->Init();
+        m_stateStack.top()->Start();
         m_add = false;
     }
 }
 
 std::unique_ptr<Engine::State> &Engine::StateMan::GetCurrent()
 {
-
+    return m_stateStack.top();
 }
