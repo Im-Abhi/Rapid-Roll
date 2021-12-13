@@ -3,8 +3,10 @@
 #include <SFML/Window/Event.hpp>
 
 GamePlay::GamePlay(std::shared_ptr<Context>& context) 
-    : m_context(context)
+    :   m_context(context), 
+        m_elapsedTime(sf::Time::Zero)
 {
+
 }
 
 GamePlay::~GamePlay() 
@@ -38,6 +40,8 @@ void GamePlay::Init()
     m_spikes.setTextureRect(sf::IntRect(0,0,m_context->m_window->getSize().x,16));
     m_spikes.setScale(1.f,2.f);
     m_spikes.setPosition(0,16);
+
+    ball.Init(m_context->m_assets->GetTexture(BALL));
 }
 void GamePlay::ProcessInput()
 {
@@ -48,16 +52,42 @@ void GamePlay::ProcessInput()
         {
             m_context->m_window->close();
         }
+        else if (event.type == sf::Event::KeyPressed)
+        {
+            switch (event.key.code)
+            {
+            case sf::Keyboard::A:
+                m_ballDirection = {-2.f,0.f};
+                ball.Move(m_ballDirection);
+                break;
+            case sf::Keyboard::D:
+                m_ballDirection = {2.f,0.f};
+                ball.Move(m_ballDirection);
+                break;
+            case sf::Keyboard::S:
+                m_ballDirection = {0.f,2.f};
+                ball.Move(m_ballDirection);
+                break;
+            default:
+                break;
+            }
+        }
     }
 }
 void GamePlay::Update(sf::Time deltaTime)
 {
-
+    m_elapsedTime += deltaTime;
+    if (m_elapsedTime.asSeconds() > 0.1)
+    {
+        m_elapsedTime = sf::Time::Zero;
+    }
 }
 void GamePlay::Draw()
 {
     m_context->m_window->clear(sf::Color::Cyan);
     m_context->m_window->draw(m_spikes);
+    ball.StartDownward({0.f, 0.4f});
+    m_context->m_window->draw(ball);
     for(auto &wall: m_walls)
     {
         m_context->m_window->draw(wall);
