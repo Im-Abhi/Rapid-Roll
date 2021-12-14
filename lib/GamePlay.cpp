@@ -4,7 +4,8 @@
 
 GamePlay::GamePlay(std::shared_ptr<Context>& context) 
     :   m_context(context), 
-        m_elapsedTime(sf::Time::Zero)
+        m_elapsedTime(sf::Time::Zero),
+        spawnTime(sf::Time::Zero)
 {
 
 }
@@ -40,7 +41,7 @@ void GamePlay::Init()
     m_spikes.setTextureRect(sf::IntRect(0,0,m_context->m_window->getSize().x,16));
     m_spikes.setScale(1.f,2.f);
     m_spikes.setPosition(0,16);
-
+    SpawnSurfaces();
     ball.Init(m_context->m_assets->GetTexture(BALL));
 }
 void GamePlay::ProcessInput()
@@ -64,10 +65,10 @@ void GamePlay::ProcessInput()
                 m_ballDirection = {2.f,0.f};
                 ball.Move(m_ballDirection);
                 break;
-            case sf::Keyboard::S:
-                m_ballDirection = {0.f,2.f};
-                ball.Move(m_ballDirection);
-                break;
+            // case sf::Keyboard::S:
+            //     m_ballDirection = {0.f,2.f};
+            //     ball.Move(m_ballDirection);
+            //     break;
             default:
                 break;
             }
@@ -86,6 +87,12 @@ void GamePlay::Update(sf::Time deltaTime)
         }
         m_elapsedTime = sf::Time::Zero;
     }
+    spawnTime += deltaTime;
+    if(spawnTime.asSeconds() >= 4.f)
+    {
+        SpawnSurfaces();
+        spawnTime = sf::Time::Zero;
+    }
 }
 void GamePlay::Draw()
 {
@@ -97,6 +104,11 @@ void GamePlay::Draw()
     {
         m_context->m_window->draw(wall);
     }
+    for(auto &surface: n_surfaces)
+    {
+        m_context->m_window->draw(surface);
+        surface.move(0.f, -0.4f);
+    }
     m_context->m_window->display();
 }
 void GamePlay::Pause()
@@ -106,4 +118,24 @@ void GamePlay::Pause()
 void GamePlay::Start()
 {
 
+}
+
+void GamePlay::SpawnSurfaces()
+{
+    sf::Sprite surface;
+    surface.setTexture(m_context->m_assets->GetTexture(SURFACE));
+    surface.setScale(4.f,1.f);
+    int x = generateRandom();
+    surface.setPosition(x, m_context->m_window->getSize().y);
+    n_surfaces.push_back(surface);
+}
+
+int GamePlay::generateRandom()
+{
+    srand((unsigned) time(0));
+    int randomNumber;
+    for (int index = 0; index < 10; index++) {
+        randomNumber = (rand() % (m_context->m_window->getSize().x-200)) + 32;
+    }
+    return randomNumber;
 }

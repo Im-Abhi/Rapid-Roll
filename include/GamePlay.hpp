@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <array>
+#include <vector>
 
 #include <SFML\Graphics\Sprite.hpp>
 
@@ -13,13 +14,17 @@ class GamePlay : public Engine::State
 {
 private:
     std::shared_ptr<Context> m_context;
-    sf::Sprite m_surface;
     sf::Sprite m_spikes;
     // sf::Sprite m_sky;
     std::array<sf::Sprite, 3> m_walls;
     sf::Vector2f m_ballDirection;
     sf::Time m_elapsedTime;
     Ball ball;
+    // Below is the sufaces
+    sf::Time spawnTime;
+    std::vector<sf::Sprite> n_surfaces;
+
+
 public:
     GamePlay(std::shared_ptr<Context>& context);
     ~GamePlay();
@@ -30,4 +35,8 @@ public:
     void Draw() override;
     void Pause() override;
     void Start() override;
+    // Function for surfaces
+    void SpawnSurfaces();
+    // Utility function to generator random number
+    int generateRandom();
 };
