@@ -79,6 +79,11 @@ void GamePlay::Update(sf::Time deltaTime)
     m_elapsedTime += deltaTime;
     if (m_elapsedTime.asSeconds() > 0.1)
     {
+        if(ball.isOn(m_spikes))
+        {
+            // To Do
+            // Add GameOver state
+        }
         m_elapsedTime = sf::Time::Zero;
     }
 }
