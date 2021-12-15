@@ -7,6 +7,7 @@
 #include <SFML\Graphics\RenderStates.hpp>
 
 #include <windows.h>
+#include <vector>
 
 class Ball : public sf::Drawable
 {
@@ -21,4 +22,6 @@ public:
     bool isOn(const sf::Sprite &other) const;
     void StartDownward(const sf::Vector2f &speed);
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+    // Function to check collision with surface tiles
+    void checkSurfaceCollision(std::vector<sf::Sprite> &n_surfaces);
 };

@@ -13,7 +13,7 @@ Ball::~Ball()
 void Ball::Init(const sf::Texture &texture)
 {
     m_ball.setTexture(texture);
-    m_ball.setPosition(50.f,50.f);
+    m_ball.setPosition(250.f,50.f);
     m_ball.setScale(2.f,2.f);
 }
 
@@ -43,4 +43,19 @@ void Ball::draw(sf::RenderTarget &target, sf::RenderStates states) const
 void Ball::StartDownward(const sf::Vector2f &speed)
 {
     m_ball.move(speed);
+}
+
+void Ball::checkSurfaceCollision(std::vector<sf::Sprite> &n_surfaces)
+{
+    for(auto surface: n_surfaces)
+    {
+        if(m_ball.getGlobalBounds().intersects(surface.getGlobalBounds()))
+        {
+            m_ball.setPosition(m_ball.getPosition().x,surface.getPosition().y-32);
+        }
+        else
+        {
+            m_ball.setPosition(m_ball.getPosition().x,m_ball.getPosition().y+0.15f);
+        }
+    }
 }

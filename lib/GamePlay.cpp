@@ -65,10 +65,6 @@ void GamePlay::ProcessInput()
                 m_ballDirection = {2.f,0.f};
                 ball.Move(m_ballDirection);
                 break;
-            // case sf::Keyboard::S:
-            //     m_ballDirection = {0.f,2.f};
-            //     ball.Move(m_ballDirection);
-            //     break;
             default:
                 break;
             }
@@ -78,6 +74,7 @@ void GamePlay::ProcessInput()
 void GamePlay::Update(sf::Time deltaTime)
 {
     m_elapsedTime += deltaTime;
+    ball.checkSurfaceCollision(n_surfaces);
     if (m_elapsedTime.asSeconds() > 0.1)
     {
         if(ball.isOn(m_spikes))
@@ -98,7 +95,6 @@ void GamePlay::Draw()
 {
     m_context->m_window->clear(sf::Color::Cyan);
     m_context->m_window->draw(m_spikes);
-    ball.StartDownward({0.f, 0.4f});
     m_context->m_window->draw(ball);
     for(auto &wall: m_walls)
     {
@@ -124,7 +120,7 @@ void GamePlay::SpawnSurfaces()
 {
     sf::Sprite surface;
     surface.setTexture(m_context->m_assets->GetTexture(SURFACE));
-    surface.setScale(4.f,1.f);
+    surface.setScale(5.f,1.f);
     int x = generateRandom();
     surface.setPosition(x, m_context->m_window->getSize().y);
     n_surfaces.push_back(surface);
