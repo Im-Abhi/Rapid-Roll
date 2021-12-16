@@ -19,7 +19,7 @@ public:
 
     void Init(const sf::Texture &texture);
     void Move(const sf::Vector2f &direction);
-    bool isOn(const sf::Sprite &other) const;
+    bool isOn(float window_y) const;
     void StartDownward(const sf::Vector2f &speed);
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
     // Function to check collision with surface tiles

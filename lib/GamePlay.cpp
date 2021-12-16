@@ -77,8 +77,9 @@ void GamePlay::Update(sf::Time deltaTime)
     ball.checkSurfaceCollision(n_surfaces);
     if (m_elapsedTime.asSeconds() > 0.1)
     {
-        if(ball.isOn(m_spikes))
+        if(ball.isOn(m_context->m_window->getSize().y))
         {
+            m_context->m_window->close();
             // To Do
             // Add GameOver state
         }

@@ -29,9 +29,17 @@ void Ball::Move(const sf::Vector2f &direction)
     m_ball.setPosition(m_ball.getPosition() + direction);
 }
 
-bool Ball::isOn(const sf::Sprite &other) const
+bool Ball::isOn(float window_y) const
 {
-    
+    int y = m_ball.getPosition().y;
+    if( y <=40 || y >= window_y -32 )
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 void Ball::draw(sf::RenderTarget &target, sf::RenderStates states) const
