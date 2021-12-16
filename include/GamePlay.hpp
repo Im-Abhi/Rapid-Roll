@@ -39,4 +39,6 @@ public:
     void SpawnSurfaces();
     // Utility function to generator random number
     int generateRandom();
+    // Function to delete the surface tiles when they reaches top
+    void DeleteSurfaces();
 };

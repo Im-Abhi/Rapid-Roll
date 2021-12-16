@@ -84,6 +84,7 @@ void GamePlay::Update(sf::Time deltaTime)
         }
         m_elapsedTime = sf::Time::Zero;
     }
+    DeleteSurfaces();
     spawnTime += deltaTime;
     if(spawnTime.asSeconds() >= 4.f)
     {
@@ -96,14 +97,14 @@ void GamePlay::Draw()
     m_context->m_window->clear(sf::Color::Cyan);
     m_context->m_window->draw(m_spikes);
     m_context->m_window->draw(ball);
-    for(auto &wall: m_walls)
-    {
-        m_context->m_window->draw(wall);
-    }
     for(auto &surface: n_surfaces)
     {
         m_context->m_window->draw(surface);
         surface.move(0.f, -0.4f);
+    }
+    for(auto &wall: m_walls)
+    {
+        m_context->m_window->draw(wall);
     }
     m_context->m_window->display();
 }
@@ -134,4 +135,16 @@ int GamePlay::generateRandom()
         randomNumber = (rand() % (m_context->m_window->getSize().x-200)) + 32;
     }
     return randomNumber;
+}
+
+void GamePlay::DeleteSurfaces()
+{
+    for(int i=0; i<n_surfaces.size();i++)
+    {
+        if(n_surfaces[i].getPosition().y <= 40)
+        {
+            n_surfaces.erase((n_surfaces.begin()));
+            printf("surface removed");
+        }
+    }
 }
