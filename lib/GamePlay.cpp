@@ -145,7 +145,6 @@ void GamePlay::DeleteSurfaces()
         if(n_surfaces[i].getPosition().y <= 40)
         {
             n_surfaces.erase((n_surfaces.begin()));
-            printf("surface removed");
         }
     }
 }
