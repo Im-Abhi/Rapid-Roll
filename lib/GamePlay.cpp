@@ -1,4 +1,5 @@
 #include "GamePlay.hpp"
+#include "GameOver.hpp"
 
 #include <SFML/Window/Event.hpp>
 
@@ -79,9 +80,7 @@ void GamePlay::Update(sf::Time deltaTime)
     {
         if(ball.isOn(m_context->m_window->getSize().y))
         {
-            m_context->m_window->close();
-            // To Do
-            // Add GameOver state
+            m_context->m_states->Add(std::make_unique<GameOver>(m_context), true);
         }
         m_elapsedTime = sf::Time::Zero;
     }
