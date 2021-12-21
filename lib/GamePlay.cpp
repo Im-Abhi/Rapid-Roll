@@ -1,5 +1,6 @@
 #include "GamePlay.hpp"
 #include "GameOver.hpp"
+#include "PauseGame.hpp"
 
 #include <SFML/Window/Event.hpp>
 
@@ -65,6 +66,9 @@ void GamePlay::ProcessInput()
             case sf::Keyboard::D:
                 m_ballDirection = {2.f,0.f};
                 ball.Move(m_ballDirection);
+                break;
+            case sf::Keyboard::Escape:
+                m_context->m_states->Add(std::make_unique<PauseGame>(m_context));
                 break;
             default:
                 break;
