@@ -7,7 +7,8 @@
 GamePlay::GamePlay(std::shared_ptr<Context>& context) 
     :   m_context(context), 
         m_elapsedTime(sf::Time::Zero),
-        spawnTime(sf::Time::Zero)
+        spawnTime(sf::Time::Zero),
+        m_score(0)
 {
 
 }
@@ -45,6 +46,10 @@ void GamePlay::Init()
     m_spikes.setPosition(0,16);
     SpawnSurfaces();
     ball.Init(m_context->m_assets->GetTexture(BALL));
+
+    m_scoreText.setFont(m_context->m_assets->GetFont(MAIN_FONT));
+    m_scoreText.setString("Score : " + std::to_string(m_score));
+    m_scoreText.setCharacterSize(15);
 }
 void GamePlay::ProcessInput()
 {
@@ -88,7 +93,11 @@ void GamePlay::Update(sf::Time deltaTime)
         }
         m_elapsedTime = sf::Time::Zero;
     }
-    DeleteSurfaces();
+    if(DeleteSurfaces())
+    {
+        m_score += 1;
+        m_scoreText.setString("Score : " + std::to_string(m_score));
+    }
     spawnTime += deltaTime;
     if(spawnTime.asSeconds() >= 4.f)
     {
@@ -110,6 +119,7 @@ void GamePlay::Draw()
     {
         m_context->m_window->draw(wall);
     }
+    m_context->m_window->draw(m_scoreText);
     m_context->m_window->display();
 }
 void GamePlay::Pause()
@@ -141,13 +151,15 @@ int GamePlay::generateRandom()
     return randomNumber;
 }
 
-void GamePlay::DeleteSurfaces()
+bool GamePlay::DeleteSurfaces()
 {
     for(int i=0; i<n_surfaces.size();i++)
     {
         if(n_surfaces[i].getPosition().y <= 40)
         {
             n_surfaces.erase((n_surfaces.begin()));
+            return true;
         }
     }
+    return false;
 }

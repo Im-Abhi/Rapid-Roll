@@ -5,6 +5,7 @@
 #include <vector>
 
 #include <SFML\Graphics\Sprite.hpp>
+#include <SFML\Graphics\Text.hpp>
 
 #include "Game.hpp"
 #include "State.hpp"
@@ -24,6 +25,8 @@ private:
     sf::Time spawnTime;
     std::vector<sf::Sprite> n_surfaces;
 
+    sf::Text m_scoreText;
+    int m_score;
 
 public:
     GamePlay(std::shared_ptr<Context>& context);
@@ -40,5 +43,5 @@ public:
     // Utility function to generator random number
     int generateRandom();
     // Function to delete the surface tiles when they reaches top
-    void DeleteSurfaces();
+    bool DeleteSurfaces();
 };
