@@ -13,9 +13,6 @@ PauseGame::~PauseGame()
 
 void PauseGame::Init()
 {
-    //m_context->m_assets->AddFont(MAIN_FONT, "/Users/faizalaam/Desktop/sfml-gamee/Rapid-Roll/assets/fonts/Pacifico-Regular.ttf");
-    m_context->m_assets->AddFont(MAIN_FONT, "assets/fonts/Pacifico-Regular.ttf");
-
     // Title
     m_pauseTitle.setFont(m_context->m_assets->GetFont(MAIN_FONT));
     m_pauseTitle.setString("Paused");
