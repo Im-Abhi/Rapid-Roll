@@ -8,7 +8,8 @@ GamePlay::GamePlay(std::shared_ptr<Context>& context)
     :   m_context(context), 
         m_elapsedTime(sf::Time::Zero),
         spawnTime(sf::Time::Zero),
-        m_score(0)
+        m_score(0),
+        m_isPaused(false)
 {
 
 }
@@ -83,6 +84,8 @@ void GamePlay::ProcessInput()
 }
 void GamePlay::Update(sf::Time deltaTime)
 {
+    if(m_isPaused)
+        return;
     m_elapsedTime += deltaTime;
     ball.checkSurfaceCollision(n_surfaces);
     if (m_elapsedTime.asSeconds() > 0.1)
@@ -122,13 +125,14 @@ void GamePlay::Draw()
     m_context->m_window->draw(m_scoreText);
     m_context->m_window->display();
 }
+
 void GamePlay::Pause()
 {
-
+    m_isPaused = true;
 }
 void GamePlay::Start()
 {
-
+    m_isPaused = false;
 }
 
 void GamePlay::SpawnSurfaces()

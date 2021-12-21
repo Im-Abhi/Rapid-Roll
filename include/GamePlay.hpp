@@ -28,6 +28,7 @@ private:
     sf::Text m_scoreText;
     int m_score;
 
+    bool m_isPaused;
 public:
     GamePlay(std::shared_ptr<Context>& context);
     ~GamePlay();
