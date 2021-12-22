@@ -36,7 +36,7 @@ void GamePlay::Init()
         wall.setTexture(m_context->m_assets->GetTexture(WALL));
     }
     m_walls[0].setTextureRect(sf::IntRect(0, 0 ,m_context->m_window->getSize().x, 16));  // Top wall
-
+    m_walls[0].setColor(sf::Color::Black);
     m_walls[1].setTextureRect(sf::IntRect(0, 0 ,32 ,m_context->m_window->getSize().y));  // Left wall
 
     m_walls[2].setTextureRect(sf::IntRect(0, 0 ,32, m_context->m_window->getSize().y));  // Right wall
@@ -50,6 +50,7 @@ void GamePlay::Init()
 
     m_scoreText.setFont(m_context->m_assets->GetFont(MAIN_FONT));
     m_scoreText.setString("Score : " + std::to_string(m_score));
+    m_scoreText.setPosition(32,0);
     m_scoreText.setCharacterSize(15);
 }
 void GamePlay::ProcessInput()
