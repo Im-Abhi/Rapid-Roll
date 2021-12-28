@@ -111,7 +111,7 @@ void GamePlay::Update(sf::Time deltaTime)
 }
 void GamePlay::Draw()
 {
-    m_context->m_window->clear(sf::Color::Cyan);
+    m_context->m_window->clear(sf::Color(102,204,255));
     m_context->m_window->draw(m_spikes);
     m_context->m_window->draw(ball);
     for(auto &surface: n_surfaces)

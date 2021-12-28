@@ -63,7 +63,7 @@ void Ball::checkSurfaceCollision(std::vector<sf::Sprite> &n_surfaces)
         }
         else
         {
-            m_ball.setPosition(m_ball.getPosition().x,m_ball.getPosition().y+0.15f);
+            m_ball.setPosition(m_ball.getPosition().x,m_ball.getPosition().y+0.35f);
         }
     }
 }
