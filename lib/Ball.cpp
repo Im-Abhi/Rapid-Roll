@@ -14,7 +14,7 @@ void Ball::Init(const sf::Texture &texture)
 {
     m_ball.setTexture(texture);
     m_ball.setPosition(250.f,50.f);
-    m_ball.setScale(2.f,2.f);
+    // m_ball.setScale(2.f,2.f);
 }
 
 void Ball::Move(const sf::Vector2f &direction)

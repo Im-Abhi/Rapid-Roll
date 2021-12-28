@@ -112,6 +112,11 @@ void GamePlay::Update(sf::Time deltaTime)
 void GamePlay::Draw()
 {
     m_context->m_window->clear(sf::Color(102,204,255));
+    sf::Texture m_bg;
+    m_bg.loadFromFile("assets\\textures\\clouds.jpg");
+    sf::Sprite bg;
+    bg.setTexture(m_bg);
+    m_context->m_window->draw(bg);
     m_context->m_window->draw(m_spikes);
     m_context->m_window->draw(ball);
     for(auto &surface: n_surfaces)
